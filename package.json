@@ -1,7 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "vue-inertia-composable",
-  "private": false,
   "version": "0.0.1",
   "description": "Inertia for Vue2 Composition API.",
   "author": {
@@ -67,8 +66,8 @@
     "eslint-plugin-tsdoc": "^0.2.16",
     "eslint-plugin-vue": "^9.1.1",
     "husky": "^8.0.1",
-    "lint-staged": "^13.0.1",
-    "prettier": "^2.7.0",
+    "lint-staged": "^13.0.2",
+    "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "rollup-plugin-visualizer": "^5.6.0",
     "typescript": "^4.7.3",
