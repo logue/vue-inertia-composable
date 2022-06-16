@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "vue-inertia-composable",
-  "private": true,
+  "private": false,
   "version": "0.0.1",
   "description": "Inertia for Vue2 Composition API.",
   "author": {
