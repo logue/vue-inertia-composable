@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "vue-inertia-composable",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Inertia for Vue2 Composition API.",
+  "author": {
+    "name": "Logue",
+    "email": "logue@hotmail.co.jp",
+    "url": "https://logue.dev/"
+  },
+  "homepage": "https://github.com/logue/vue-inertia-composable",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:logue/vue-inertia-composable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/logue/vue-inertia-composable/issues"
+  },
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=16.15.1",
+    "yarn": ">=1.22.4"
+  },
+  "packageManager": "yarn@3.2.1",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint . --fix --cache --cache-location ./node_modules/.vite/vite-plugin-eslint && prettier . -w -u",
+    "build": "vite build && tsc",
+    "build:analyze": "vite build --mode analyze",
+    "build:clean": "rimraf dist",
+    "preview": "vite preview",
+    "prepare": "husky install"
+  },
+  "peerDependencies": {
+    "@inertiajs/inertia": "*",
+    "@inertiajs/inertia-vue": "*",
+    "@vue/composition-api": "*",
+    "vue": "^2.6.14",
+    "ziggy-js": "*"
+  },
+  "devDependencies": {
+    "@inertiajs/inertia": "^0.11.0",
+    "@inertiajs/inertia-vue": "^0.8.0",
+    "@types/eslint": "^8.4.3",
+    "@types/node": "^18.0.0",
+    "@types/webfontloader": "^1.6.34",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "@vue/composition-api": "^1.6.2",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "eslint": "^8.17.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-html": "^6.2.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.3.2",
+    "eslint-plugin-tsdoc": "^0.2.16",
+    "eslint-plugin-vue": "^9.1.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.1",
+    "prettier": "^2.7.0",
+    "rimraf": "^3.0.2",
+    "rollup-plugin-visualizer": "^5.6.0",
+    "typescript": "^4.7.3",
+    "vite": "2.9.12",
+    "vite-plugin-checker": "^0.4.6",
+    "vue-eslint-parser": "^9.0.2",
+    "vue-tsc": "^0.37.9",
+    "ziggy-js": "^1.4.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,json,md}": "eslint --fix --cache --cache-location ./node_modules/.vite/vite-plugin-eslint",
+    "*": "prettier -w -u"
+  }
+}
