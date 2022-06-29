@@ -6,20 +6,22 @@
 [![npm version](https://img.shields.io/npm/v/vue-inertia-composable.svg)](https://www.npmjs.com/package/vue-inertia-composable)
 [![Open in Gitpod](https://shields.io/badge/Open%20in-Gitpod-green?logo=Gitpod)](https://gitpod.io/#https://github.com/logue/vue-inertia-composable)
 
-Wrapper library for using [Inertia](https://inertiajs.com/) with [@vue/composition-api](https://github.com/vuejs/composition-api).
+Wrapper library for [Vue2](https://v2.vuejs.org/) using [Inertia](https://inertiajs.com/) with [@vue/composition-api](https://github.com/vuejs/composition-api).
 
 ## Usage
 
-Rewrite entry point script. (such as `main.ts` or `app.js`)
+Rewrite entry point script(such as `main.ts` or `app.js`).
 
 ```js
+import './bootstrap';
+import '../css/app.css';
+
 import Vue from 'vue';
 import VueCompositionAPI, { createApp, h } from '@vue/composition-api';
-
 import { createInertiaApp } from '@inertiajs/inertia-vue';
-import { importPageComponent } from '@/scripts/vite/import-page-component';
 import { InertiaProgress } from '@inertiajs/progress';
-import { ZiggyVue } from 'ziggy-js/dist/vue';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import ziggy from 'ziggy-js';
 
 Vue.config.productionTip = false;
@@ -29,26 +31,24 @@ Vue.use(VueCompositionAPI);
 const appName =
   window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-/** Register Vue to Inertia */
 createInertiaApp({
   title: title => `${title} - ${appName}`,
   resolve: name =>
-    importPageComponent(name, import.meta.glob('../views/pages/**/*.vue')),
+    resolvePageComponent(
+      `./Pages/${name}.vue`,
+      import.meta.glob('./Pages/**/*.vue')
+    ),
   setup({ el, app, props, plugin }) {
-    /** Get data-page attribute */
-    // @ts-ignore
-    const page = JSON.parse(el.dataset.page);
-
-    /** Vue Instance */
     const App = createApp({ render: () => h(app, props) });
     // Add route function.
     App.mixin({ methods: { route: ziggy } });
-    // Register inertia
+    // Regist Inertia Vue.
     App.use(plugin);
-    // Register route
-    App.use(ZiggyVue, page.props.ziggy);
+    // Since Ziggy here is declared globally, there is no import.
+    // @ts-ignore
+    App.use(ZiggyVue, Ziggy);
     // Mount
-    App.mount(el);
+    return App.mount(el);
   },
 });
 
