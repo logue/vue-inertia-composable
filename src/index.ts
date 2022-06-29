@@ -8,6 +8,7 @@
  */
 
 import { getCurrentInstance } from '@vue/composition-api';
+import ziggy from 'ziggy-js';
 
 import type { Page } from '@inertiajs/inertia';
 import type { Router } from '@inertiajs/inertia/types/router';
@@ -15,34 +16,38 @@ import type {
   InertiaFormTrait,
   InertiaHeadManager,
 } from '@inertiajs/inertia-vue';
-import ziggy, {
-  type Config,
-  type RouteParam,
-  type RouteParamsWithQueryOverload,
+import type {
+  Config,
+  RouteParam,
+  RouteParamsWithQueryOverload,
 } from 'ziggy-js';
 
 /**
  * Get head manager instance
  */
 export function useHeadManager(): InertiaHeadManager {
-  /** Get Instance */
+  /** Vue instance */
   const instance = getCurrentInstance();
-  if (!instance) {
-    throw new Error(`Should be used in setup().`);
+  if (instance) {
+    return instance.proxy.$headManager;
+  } else {
+    warn();
   }
-  return instance.proxy.$headManager;
+  return undefined as any;
 }
 
 /**
- * Get page instance
+ *  Get page instance
  */
 export function usePage(): Page<any> {
   /** Get Instance */
   const instance = getCurrentInstance();
-  if (!instance) {
-    throw new Error(`Should be used in setup().`);
+  if (instance) {
+    return instance.proxy.$page;
+  } else {
+    warn();
   }
-  return instance.proxy.$page;
+  return undefined as any;
 }
 
 /**
@@ -51,10 +56,12 @@ export function usePage(): Page<any> {
 export function useInertia(): Router & InertiaFormTrait {
   /** Get Instance */
   const instance = getCurrentInstance();
-  if (!instance) {
-    throw new Error(`Should be used in setup().`);
+  if (instance) {
+    return instance.proxy.$inertia;
+  } else {
+    warn();
   }
-  return instance.proxy.$inertia;
+  return undefined as any;
 }
 
 /**
@@ -62,18 +69,23 @@ export function useInertia(): Router & InertiaFormTrait {
  */
 export function route(
   name: string,
-  params?: RouteParamsWithQueryOverload | RouteParam | undefined,
-  absolute?: boolean | undefined,
-  config?: Config | undefined
+  params?: RouteParamsWithQueryOverload | RouteParam,
+  absolute?: boolean,
+  config?: Config
 ): string {
   /** Get Instance */
   const instance = getCurrentInstance();
 
-  if (!instance) {
-    // if not instance get ziggy directly
-    return ziggy(name, params, absolute, config);
-    // throw new Error(`Should be used in setup().`);
+  if (instance) {
+    return instance.proxy.route(name, params, absolute, config);
   }
+  // if not instance get ziggy directly
+  return ziggy(name, params, absolute, config);
+}
 
-  return instance.proxy.route(name, params, absolute, config);
+/** output warn message. */
+function warn() {
+  console.warn(
+    `[Inertia Composable] getCurrentInstance() returned null. Method must be called at the top of a setup() function.`
+  );
 }
