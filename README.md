@@ -128,6 +128,11 @@ These functions are basically used to access from within the `setup()` function.
 | `usePage()`        | Alias of `Vue.$page`                      |
 | `route(...)`       | Alias of `ziggy(...)` or `Vue.route(...)` |
 
+## See also
+
+- [laravel9-vite-vue2-starter](https://github.com/logue/laravel9-vite-vue2-starter) - Laravel9 + Breeze + Vue2
+- [vite-vue2-ts-starter](https://github.com/logue/vite-vue2-ts-starter)
+
 ## LICENSE
 
 [MIT](LICENSE)
