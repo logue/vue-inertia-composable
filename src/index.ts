@@ -7,12 +7,13 @@
  * @see {@link https://github.com/logue/vue-inertia-composable}
  */
 
-import { getCurrentInstance } from '@vue/composition-api';
+import { getCurrentInstance } from 'vue';
 import ziggy from 'ziggy-js';
 
 import type { Page } from '@inertiajs/inertia';
 import type { Router } from '@inertiajs/inertia/types/router';
 import type {
+  InertiaForm,
   InertiaFormTrait,
   InertiaHeadManager,
 } from '@inertiajs/inertia-vue';
@@ -65,6 +66,20 @@ export function useInertia(): Router & InertiaFormTrait {
 }
 
 /**
+ * Get Form
+ */
+export function useForm(args: any): InertiaForm<any> {
+  /** Get Instance */
+  const instance = getCurrentInstance();
+  if (instance) {
+    return instance.proxy.$inertia.form(args);
+  } else {
+    warn();
+  }
+  return undefined as any;
+}
+
+/**
  * Get route instance
  */
 export function route(
@@ -77,6 +92,7 @@ export function route(
   const instance = getCurrentInstance();
 
   if (instance) {
+    // @ts-ignore
     return instance.proxy.route(name, params, absolute, config);
   }
   // if not instance get ziggy directly

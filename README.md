@@ -6,7 +6,9 @@
 [![npm version](https://img.shields.io/npm/v/vue-inertia-composable.svg)](https://www.npmjs.com/package/vue-inertia-composable)
 [![Open in Gitpod](https://shields.io/badge/Open%20in-Gitpod-green?logo=Gitpod)](https://gitpod.io/#https://github.com/logue/vue-inertia-composable)
 
-Wrapper library for [Vue2](https://v2.vuejs.org/) using [Inertia](https://inertiajs.com/) with [@vue/composition-api](https://github.com/vuejs/composition-api).
+A wrapper library for using [Inertia](https://inertiajs.com/) with the Composition API in [Vue2](https://v2.vuejs.org/). Rewrite the function starting with `$` (such as `this.$inertia`) to use and use (ex. `const inertia = useInertia();`) it. Please note that due to the implementation of Vue Inertia, it is not always API compatible with Vue3 Inertia.
+
+At the moment, the latest version is expected to be used with vue 2.7.0. For Vue 2.6.4, please use 0.0.3.
 
 ## Usage
 
@@ -69,7 +71,8 @@ The script tags of various vue files look like the following.
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, type Ref } from '@vue/composition-api';
+import { defineComponent } from '@vue/composition-api';
+import { ref, type Ref } from 'vue';
 import { useInertia, route } from 'vue-inertia-composable';
 
 import {
@@ -126,6 +129,7 @@ These functions are basically used to access from within the `setup()` function.
 | `useInertia()`     | Alias of `Vue.$inertia`                   |
 | `useHeadManager()` | Alias of `Vue.$headManager`               |
 | `usePage()`        | Alias of `Vue.$page`                      |
+| `useForm(...)`     | Alias of `Vue.$inertia.form(...)          |
 | `route(...)`       | Alias of `ziggy(...)` or `Vue.route(...)` |
 
 ## See also

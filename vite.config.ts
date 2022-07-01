@@ -45,13 +45,13 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
               })
             : undefined,
         ],
-        external: ['@vue/composition-api', 'inertia', 'ziggy-js'],
+        external: ['vue', 'inertia', 'ziggy-js'],
         output: {
           exports: 'named',
           globals: {
-            '@vue/composition-api': 'compositionApi',
+            vue: 'Vue',
             '@inertiajs/inertia': 'Inertia',
-            '@inertiajs/inertia-vue': 'iInertiaVue',
+            '@inertiajs/inertia-vue': 'InertiaVue',
             'ziggy-js': 'ziggy',
           },
         },

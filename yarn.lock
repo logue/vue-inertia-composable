@@ -41,6 +41,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/parser@npm:^7.18.4":
+  version: 7.18.6
+  resolution: "@babel/parser@npm:7.18.6"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: 533ffc26667b7e2e0d87ae11368d90b6a3a468734d6dfe9c4697c24f48373cf9cc35ee08e416728f087fc56531b68022f752097941feddc60e0223d69a4d4cad
+  languageName: node
+  linkType: hard
+
 "@babel/types@npm:^7.8.3":
   version: 7.18.4
   resolution: "@babel/types@npm:7.18.4"
@@ -433,6 +442,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/compiler-sfc@npm:2.7.0":
+  version: 2.7.0
+  resolution: "@vue/compiler-sfc@npm:2.7.0"
+  dependencies:
+    "@babel/parser": ^7.18.4
+    postcss: ^8.4.14
+    source-map: ^0.6.1
+  checksum: f0a844671fb2d33e9019c9ff5229b04976f5173530f6626f52e3fa559ff4f332fee7e238cc0104be45674895d585a125f498cc216443de4541f4f3ff764d8335
+  languageName: node
+  linkType: hard
+
 "@vue/compiler-sfc@npm:^3.2.37":
   version: 3.2.37
   resolution: "@vue/compiler-sfc@npm:3.2.37"
@@ -458,15 +478,6 @@ __metadata:
     "@vue/compiler-dom": 3.2.37
     "@vue/shared": 3.2.37
   checksum: e137462340c220ef7891d0b40f11124e7d5311e760fdb0de1748c046481505aecd5be8ec8f7b25ac6fc26d2393cbcc267f258d2d26742a50cb9abaf828c28839
-  languageName: node
-  linkType: hard
-
-"@vue/composition-api@npm:^1.6.3":
-  version: 1.6.3
-  resolution: "@vue/composition-api@npm:1.6.3"
-  peerDependencies:
-    vue: ">= 2.5 < 3"
-  checksum: be02f40ae13db10dc075a35b3d844547ed1ebeba08f536fdd4abb7037e7d5fa131fea3f4c247d2c34d11514fe5f348843d51201f8033ba148967af220a633919
   languageName: node
   linkType: hard
 
@@ -984,6 +995,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"csstype@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "csstype@npm:3.1.0"
+  checksum: 644e986cefab86525f0b674a06889cfdbb1f117e5b7d1ce0fc55b0423ecc58807a1ea42ecc75c4f18999d14fc42d1d255f84662a45003a52bb5840e977eb2ffd
+  languageName: node
+  linkType: hard
+
 "debug@npm:4, debug@npm:^4.3.4":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
@@ -1127,13 +1145,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.9.3":
-  version: 5.9.3
-  resolution: "enhanced-resolve@npm:5.9.3"
+"enhanced-resolve@npm:^5.10.0":
+  version: 5.10.0
+  resolution: "enhanced-resolve@npm:5.10.0"
   dependencies:
     graceful-fs: ^4.2.4
     tapable: ^2.2.0
-  checksum: 64c2dbbdd608d1a4df93b6e60786c603a1faf3b2e66dfd051d62cf4cfaeeb5e800166183685587208d62e9f7afff3f78f3d5978e32cd80125ba0c83b59a79d78
+  checksum: 0bb9830704db271610f900e8d79d70a740ea16f251263362b0c91af545576d09fe50103496606c1300a05e588372d6f9780a9bc2e30ce8ef9b827ec8f44687ff
   languageName: node
   linkType: hard
 
@@ -1461,13 +1479,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "eslint-import-resolver-typescript@npm:3.1.1"
+"eslint-import-resolver-typescript@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "eslint-import-resolver-typescript@npm:3.1.2"
   dependencies:
     debug: ^4.3.4
-    enhanced-resolve: ^5.9.3
-    get-tsconfig: ^4.0.6
+    enhanced-resolve: ^5.10.0
+    get-tsconfig: ^4.1.0
     globby: ^13.1.2
     is-core-module: ^2.9.0
     is-glob: ^4.0.3
@@ -1475,7 +1493,7 @@ __metadata:
   peerDependencies:
     eslint: "*"
     eslint-plugin-import: "*"
-  checksum: 83a9a8edffebb2a0b8445117750da54669257ab23faa368cfcd91249e529afd059b5ec0f04abb5b232ede08c2a9fbcd1bf53a3eaf7b557d9e217724cd92b7e75
+  checksum: 932a3f1b29e868a5f7d91aed008a284670efbcb6e13dfb5fc168222e797a4ed8b93c6b00b21b724f720ef465f50ce4644884201cb3bb57c752deff6955d3beb9
   languageName: node
   linkType: hard
 
@@ -1911,10 +1929,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-tsconfig@npm:^4.0.6":
-  version: 4.0.7
-  resolution: "get-tsconfig@npm:4.0.7"
-  checksum: 44c2f60fa397e7606e08052465247461301e3bbf4681f104ea7b710813f5b03c47a1c15db05dc1a2d8bd1fc117b118caf03d96e2f2813dd96386ead9824b50ae
+"get-tsconfig@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "get-tsconfig@npm:4.1.0"
+  checksum: a1a29cdf53609a1e9e111bf863ea209494c03e425964ed2603e3a2657ed1d38213d4a8e3efbfd945f2ec908fe99b76d3ee87422fac5d8ec4fdd858bbb502efbf
   languageName: node
   linkType: hard
 
@@ -3126,7 +3144,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.10, postcss@npm:^8.4.13":
+"postcss@npm:^8.1.10, postcss@npm:^8.4.13, postcss@npm:^8.4.14":
   version: 8.4.14
   resolution: "postcss@npm:8.4.14"
   dependencies:
@@ -3929,9 +3947,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-checker@npm:^0.4.6":
-  version: 0.4.6
-  resolution: "vite-plugin-checker@npm:0.4.6"
+"vite-plugin-checker@npm:^0.4.7":
+  version: 0.4.7
+  resolution: "vite-plugin-checker@npm:0.4.7"
   dependencies:
     "@babel/code-frame": ^7.12.13
     ansi-escapes: ^4.3.0
@@ -3949,10 +3967,10 @@ __metadata:
     vscode-languageserver-textdocument: ^1.0.1
     vscode-uri: ^3.0.2
   peerDependencies:
-    vite: ^2.0.0
+    vite: ">=2"
   bin:
     vite-plugin-checker-vls: bin/vls
-  checksum: c6eddc40393f8000a096b3084c0d1eb7e9a3ba6b89e11f003b01920a00939d02b13e731e060310fe58b28cf4c6362b8ed8f129d951cf7b7b13bf2fee15ebbaab
+  checksum: 10eaa977c1ef47a4a8bbcaa7603910fd8cad38a29fc448681c38f8a70ccd2be64984a3aa91544374fb54878a8b294dbb1f6c0f52f962b8b3ce602af812f26920
   languageName: node
   linkType: hard
 
@@ -4072,12 +4090,11 @@ __metadata:
     "@types/ziggy-js": ^1.3.2
     "@typescript-eslint/eslint-plugin": ^5.30.0
     "@typescript-eslint/parser": ^5.30.0
-    "@vue/composition-api": ^1.6.3
     eslint: ^8.18.0
     eslint-config-google: ^0.14.0
     eslint-config-prettier: ^8.5.0
     eslint-import-resolver-alias: ^1.1.2
-    eslint-import-resolver-typescript: ^3.1.1
+    eslint-import-resolver-typescript: ^3.1.2
     eslint-plugin-import: ^2.26.0
     eslint-plugin-jsdoc: ^39.3.3
     eslint-plugin-tsdoc: ^0.2.16
@@ -4088,15 +4105,15 @@ __metadata:
     rollup-plugin-visualizer: ^5.6.0
     typescript: ^4.7.4
     vite: 2.9.13
-    vite-plugin-checker: ^0.4.6
+    vite-plugin-checker: ^0.4.7
+    vue: ^2.7.0
     vue-eslint-parser: ^9.0.3
     vue-tsc: ^0.38.2
     ziggy-js: ^1.4.6
   peerDependencies:
     "@inertiajs/inertia": "*"
     "@inertiajs/inertia-vue": "*"
-    "@vue/composition-api": "*"
-    vue: ^2.6.14
+    vue: ^2.7.0
     ziggy-js: "*"
   languageName: unknown
   linkType: soft
@@ -4111,6 +4128,16 @@ __metadata:
   bin:
     vue-tsc: bin/vue-tsc.js
   checksum: cb6aace5ee7d8b37a0ea4ea02bfc210b7b94b3fe5a65df30a9dab6a6ee5473482a64a68784b15365bec374992c7f84b77ff69438671d225f78415022801dba15
+  languageName: node
+  linkType: hard
+
+"vue@npm:^2.7.0":
+  version: 2.7.0
+  resolution: "vue@npm:2.7.0"
+  dependencies:
+    "@vue/compiler-sfc": 2.7.0
+    csstype: ^3.1.0
+  checksum: 4adaa4a8ec2b12ee2251baa8b5084b9883d36f78bf54c06c46e3da230d134f38b8c60e50599d4a5f9f4bb5b7d6a0412022d8ca4ae4c8a78aeb3ef78962643b18
   languageName: node
   linkType: hard
 
