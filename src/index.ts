@@ -1,12 +1,3 @@
-/**
- * Vue Inertia Composable
- *
- * @license MIT
- * @author Logue {@link logue@hotmail.co.jp}
- * @copyright 2022 Masashi Yoshikawa {@link https://logue.dev/} All rights reserved.
- * @see {@link https://github.com/logue/vue-inertia-composable}
- */
-
 import { getCurrentInstance } from 'vue';
 import ziggy from 'ziggy-js';
 
@@ -100,8 +91,7 @@ export function route(
 }
 
 /** output warn message. */
-function warn() {
+const warn = () =>
   console.warn(
     `[Inertia Composable] getCurrentInstance() returned null. Method must be called at the top of a setup() function.`
   );
-}

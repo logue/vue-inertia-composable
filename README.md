@@ -19,15 +19,11 @@ import './bootstrap';
 import '../css/app.css';
 
 import Vue from 'vue';
-import VueCompositionAPI, { createApp, h } from '@vue/composition-api';
 import { createInertiaApp } from '@inertiajs/inertia-vue';
 import { InertiaProgress } from '@inertiajs/progress';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import ziggy from 'ziggy-js';
-
-Vue.config.productionTip = false;
-Vue.use(VueCompositionAPI);
 
 /** Application Name */
 const appName =
@@ -41,7 +37,7 @@ createInertiaApp({
       import.meta.glob('./Pages/**/*.vue')
     ),
   setup({ el, app, props, plugin }) {
-    const App = createApp({ render: () => h(app, props) });
+    const App = new Vue({ render: h => h(app, props) });
     // Add route function.
     App.mixin({ methods: { route: ziggy } });
     // Regist Inertia Vue.
@@ -50,7 +46,7 @@ createInertiaApp({
     // @ts-ignore
     App.use(ZiggyVue, Ziggy);
     // Mount
-    return App.mount(el);
+    return App.$mount(el);
   },
 });
 
@@ -71,8 +67,7 @@ The script tags of various vue files look like the following.
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
-import { ref, type Ref } from 'vue';
+import { defineComponent, ref, type Ref } from 'vue';
 import { useInertia, route } from 'vue-inertia-composable';
 
 import {
