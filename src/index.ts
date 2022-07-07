@@ -29,7 +29,7 @@ export function useHeadManager(): InertiaHeadManager {
 }
 
 /**
- *  Get page instance
+ * Get page instance
  */
 export function usePage(): Page<any> {
   /** Get Instance */
