@@ -1,8 +1,15 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "vue-inertia-composable",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Inertia for Vue2 Composition API.",
+  "keywords": [
+    "inertia",
+    "laravel",
+    "vue2",
+    "composition-api"
+  ],
+  "license": "MIT",
   "author": {
     "name": "Logue",
     "email": "logue@hotmail.co.jp",
@@ -16,24 +23,23 @@
   "bugs": {
     "url": "https://github.com/logue/vue-inertia-composable/issues"
   },
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.es.js",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
       "require": "./dist/index.umd.js"
     }
   },
-  "types": "./dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "engines": {
     "node": ">=16.15.1",
     "yarn": ">=1.22.4"
   },
-  "files": [
-    "/dist"
-  ],
   "packageManager": "yarn@3.2.1",
-  "license": "MIT",
   "scripts": {
     "lint": "eslint . --fix --cache --cache-location ./node_modules/.vite/vite-plugin-eslint && prettier . -w -u",
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly",
@@ -42,39 +48,49 @@
     "preview": "vite preview",
     "prepare": "husky install"
   },
+  "dependencies": {
+    "vue-demi": "latest"
+  },
   "peerDependencies": {
     "@inertiajs/inertia": "*",
     "@inertiajs/inertia-vue": "*",
-    "vue": ">=2.7.0",
+    "@vue/composition-api": "^1.7.0",
+    "vue": "^2.6.14 || >=2.7.0 || <3.0.0",
     "ziggy-js": "*"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@inertiajs/inertia": "^0.11.0",
     "@inertiajs/inertia-vue": "^0.8.0",
-    "@types/node": "^18.0.3",
+    "@types/node": "^18.6.3",
     "@types/ziggy-js": "^1.3.2",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
-    "eslint": "^8.19.0",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
+    "@vue/tsconfig": "^0.1.3",
+    "eslint": "^8.21.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-import-resolver-typescript": "^3.2.4",
+    "eslint-import-resolver-typescript": "^3.4.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsdoc": "^39.3.3",
+    "eslint-plugin-jsdoc": "^39.3.4",
     "eslint-plugin-tsdoc": "^0.2.16",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "rollup-plugin-visualizer": "^5.6.0",
+    "rollup-plugin-visualizer": "^5.7.1",
     "typescript": "^4.7.4",
-    "vite": "2.9.13",
+    "vite": "3.0.4",
     "vite-plugin-banner": "^0.3.0",
-    "vite-plugin-checker": "^0.4.8",
-    "vue": "^2.7.3",
+    "vite-plugin-checker": "^0.4.9",
+    "vue": "^2.7.8",
     "vue-eslint-parser": "^9.0.3",
-    "vue-tsc": "^0.38.3",
+    "vue-tsc": "^0.39.4",
     "ziggy-js": "^1.4.6"
   },
   "husky": {

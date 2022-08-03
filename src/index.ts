@@ -1,4 +1,4 @@
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance } from 'vue-demi';
 import ziggy from 'ziggy-js';
 
 import type { Page } from '@inertiajs/inertia';
