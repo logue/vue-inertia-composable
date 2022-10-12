@@ -95,3 +95,9 @@ const warn = () =>
   console.warn(
     `[Inertia Composable] getCurrentInstance() returned null. Method must be called at the top of a setup() function.`
   );
+
+// @ts-ignore
+if (window.route === undefined) {
+  // @ts-ignore
+  window.route = route;
+}
