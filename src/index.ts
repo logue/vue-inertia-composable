@@ -1,7 +1,7 @@
 import { getCurrentInstance } from 'vue-demi';
 import ziggy from 'ziggy-js';
 
-import type { Page } from '@inertiajs/inertia';
+import type { Page, PageProps } from '@inertiajs/inertia';
 import type { Router } from '@inertiajs/inertia/types/router';
 import type {
   InertiaForm,
@@ -31,7 +31,7 @@ export function useHeadManager(): InertiaHeadManager {
 /**
  * Get page instance
  */
-export function usePage(): Page<any> {
+export function usePage(): Page<PageProps> {
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
@@ -59,11 +59,11 @@ export function useInertia(): Router & InertiaFormTrait {
 /**
  * Get Form
  */
-export function useForm(args: any): InertiaForm<any> {
+export function useForm<T>(args: T): InertiaForm<T> {
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
-    return instance.proxy.$inertia.form(args);
+    return instance.proxy.$inertia.form<T>(args);
   } else {
     warn();
   }
