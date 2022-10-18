@@ -5,6 +5,7 @@
 [![Open in unpkg](https://img.shields.io/badge/Open%20in-unpkg-blue)](https://uiwjs.github.io/npm-unpkg/#/pkg/vue-inertia-composable/file/README.md)
 [![npm version](https://img.shields.io/npm/v/vue-inertia-composable.svg)](https://www.npmjs.com/package/vue-inertia-composable)
 [![Open in Gitpod](https://shields.io/badge/Open%20in-Gitpod-green?logo=Gitpod)](https://gitpod.io/#https://github.com/logue/vue-inertia-composable)
+[![Twitter Follow](https://img.shields.io/twitter/follow/logue256?style=plastic)](https://twitter.com/logue256)
 
 A wrapper library for using [Inertia](https://inertiajs.com/) with the [Composition API](https://composition-api.vuejs.org/) in [Vue2](https://v2.vuejs.org/). Rewrite the function starting with `$` (such as `this.$inertia`) to use and use (ex. `const inertia = useInertia();`) it. Please note that due to the implementation of Vue Inertia, it is not always API compatible with Vue3 Inertia.
 
@@ -43,6 +44,9 @@ createInertiaApp({
     // Since Ziggy here is declared globally, there is no import.
     // @ts-ignore
     App.use(ZiggyVue, Ziggy);
+
+    // ... Add some components
+
     // Mount
     return App.$mount(el);
   },
@@ -117,13 +121,15 @@ export default defineComponent({
 
 These functions are basically used to access from within the `setup()` function.
 
-| Function           | information                               |
-| ------------------ | ----------------------------------------- |
-| `useInertia()`     | Alias of `Vue.$inertia`                   |
-| `useHeadManager()` | Alias of `Vue.$headManager`               |
-| `usePage()`        | Alias of `Vue.$page`                      |
-| `useForm(...)`     | Alias of `Vue.$inertia.form(...)          |
-| `route(...)`       | Alias of `ziggy(...)` or `Vue.route(...)` |
+| Function                                                                                                              | information                               |
+| --------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `useInertia(): typeof Inertia & InertiaFormTrait`                                                                     | Alias of `Vue.$inertia`                   |
+| `useHeadManager(): InertiaHeadManager`                                                                                | Alias of `Vue.$headManager`               |
+| `usePage<SharedProps = Record<string, any>>(): Page<SharedProps>`                                                     | Alias of `Vue.$page`                      |
+| `useForm<TForm = Record<string, any>>(args: TForm): InertiaForm<TForm>`                                               | Alias of `Vue.$inertia.form(...)`         |
+| `route(name: string, params?: RouteParamsWithQueryOverload, RouteParam, absolute?: boolean, config?: Config): string` | Alias of `ziggy(...)` or `Vue.route(...)` |
+
+Originally defined PageProps are similar to key-value pairs, but the value type is defined as unknown. As it is, the TypeScript check doesn't go well, so I changed the value type to any.
 
 ## See also
 
@@ -133,3 +139,5 @@ These functions are basically used to access from within the `setup()` function.
 ## LICENSE
 
 [MIT](LICENSE)
+
+&copy; 2022 by Logue.
