@@ -1,8 +1,9 @@
+import { checker } from 'vite-plugin-checker';
 import { defineConfig, type UserConfig } from 'vite';
-import { fileURLToPath } from 'url';
 import { visualizer } from 'rollup-plugin-visualizer';
 import banner from 'vite-plugin-banner';
-import checker from 'vite-plugin-checker';
+
+import { fileURLToPath, URL } from 'node:url';
 
 const pkg = require('./package.json');
 
