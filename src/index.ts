@@ -9,6 +9,7 @@ import type {
   InertiaHeadManager,
 } from '@inertiajs/inertia-vue';
 import type {
+  Router as ZiggyRouter,
   Config,
   RouteParam,
   RouteParamsWithQueryOverload,
@@ -74,11 +75,11 @@ export function useForm<T>(args: T): InertiaForm<T> {
  * Get route instance
  */
 export function route(
-  name: string,
+  name?: undefined,
   params?: RouteParamsWithQueryOverload | RouteParam,
   absolute?: boolean,
   config?: Config
-): string {
+): string | ZiggyRouter {
   /** Get Instance */
   const instance = getCurrentInstance();
 
