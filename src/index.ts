@@ -13,6 +13,7 @@ import type {
   RouteParam,
   RouteParamsWithQueryOverload,
 } from 'ziggy-js';
+import InertiaLink from './link';
 
 /**
  * Get head manager instance
@@ -93,7 +94,7 @@ export function route(
   params?: RouteParamsWithQueryOverload | RouteParam,
   absolute?: boolean,
   config?: Config
-): string | Router {
+): Router {
   /** Get Instance */
   const instance = getCurrentInstance();
 
@@ -110,6 +111,8 @@ const warn = () =>
   console.warn(
     `[Inertia Composable] getCurrentInstance() returned null. Method must be called at the top of a setup() function.`
   );
+
+export { InertiaLink };
 
 // @ts-ignore
 if (window.route === undefined) {

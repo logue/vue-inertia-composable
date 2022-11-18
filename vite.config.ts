@@ -41,6 +41,9 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
  */
 `),
     ],
+    optimizeDeps: {
+      exclude: ['vue-demi'],
+    },
     // Build Options
     // https://vitejs.dev/config/#build-options
     build: {
@@ -63,13 +66,27 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
               })
             : undefined,
         ],
-        external: ['vue', 'inertia', 'ziggy-js'],
+        external: [
+          '@inertiajs/inertia-vue',
+          '@inertiajs/inertia',
+          'axios',
+          'deepmerge',
+          'has-symbols',
+          'qs',
+          'side-channel',
+          'vue',
+          'ziggy-js',
+        ],
         output: {
           exports: 'named',
           globals: {
-            vue: 'Vue',
-            '@inertiajs/inertia': 'Inertia',
             '@inertiajs/inertia-vue': 'InertiaVue',
+            '@inertiajs/inertia': 'Inertia',
+            axios: 'Axios',
+            deepmerge: 'Deepmerge',
+            qs: 'Qs',
+            'side-channel': 'SideChannel',
+            vue: 'Vue',
             'ziggy-js': 'ziggy',
           },
         },
