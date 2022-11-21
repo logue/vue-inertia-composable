@@ -90,11 +90,11 @@ export function useForm<TForm = Record<string, any>>(
  * @param config - override confing. (Host, Port, etc.)
  */
 export function route(
-  name?: undefined,
+  name?: string,
   params?: RouteParamsWithQueryOverload | RouteParam,
   absolute?: boolean,
   config?: Config
-): Router {
+): Router & string {
   /** Get Instance */
   const instance = getCurrentInstance();
 
@@ -103,7 +103,7 @@ export function route(
     return instance.proxy.route(name, params, absolute, config);
   }
   // if not instance get ziggy directly
-  return ziggy(name, params, absolute, config);
+  return ziggy(name as any, params, absolute, config) as any;
 }
 
 /** output warn message. */
