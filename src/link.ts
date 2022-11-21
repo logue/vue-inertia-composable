@@ -30,7 +30,7 @@ const InertiaLink = defineComponent({
       default: '',
     },
     method: {
-      type: String as PropType<Method>,
+      type: String as PropType<'get' | 'post' | 'put' | 'patch' | 'delete'>,
       default: 'get',
     },
     replace: {
@@ -58,10 +58,10 @@ const InertiaLink = defineComponent({
       default: 'brackets',
     },
   },
-  setup(props: any, { slots, attrs }: SetupContext) {
+  setup(_props, { slots, attrs }: SetupContext) {
     return (props: any) => {
       const as = props.as.toLowerCase();
-      const method = props.method.toLowerCase();
+      const method = props.method.toLowerCase() as Method;
       const [href, data] = mergeDataIntoQueryString(
         method,
         props.href || '',
