@@ -13,7 +13,7 @@ import type {
   RouteParam,
   RouteParamsWithQueryOverload,
 } from 'ziggy-js';
-import InertiaLink from './link';
+import { InertiaLink, install } from './link';
 
 /**
  * Get head manager instance
@@ -112,10 +112,11 @@ const warn = () =>
     `[Inertia Composable] getCurrentInstance() returned null. Method must be called at the top of a setup() function.`
   );
 
-export { InertiaLink };
-
+// For CDN.
 // @ts-ignore
-if (window.route === undefined) {
+if (typeof window !== 'undefined') {
   // @ts-ignore
   window.route = route;
 }
+
+export { InertiaLink, install };

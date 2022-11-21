@@ -1,4 +1,4 @@
-import { h, type PropType, type SetupContext } from 'vue-demi';
+import { defineComponent, h, type PropType, type SetupContext } from 'vue-demi';
 import {
   Inertia,
   mergeDataIntoQueryString,
@@ -10,11 +10,11 @@ import {
 } from '@inertiajs/inertia';
 
 /**
- * Alternate of Inertia Link
+ * Alternate of Inertia Link Component
  *
  * @experimental
  */
-export default {
+const InertiaLink = defineComponent({
   name: 'InertiaLink',
   props: {
     as: {
@@ -108,4 +108,14 @@ export default {
       );
     };
   },
-};
+});
+
+const installInertiaLink = (app: any) =>
+  app.component('InertiaLink', InertiaLink);
+
+export { InertiaLink, installInertiaLink as install };
+
+if (typeof window !== 'undefined' && window.Vue) {
+  // @ts-ignore
+  window.Vue.use(InertiaLink);
+}

@@ -70,12 +70,9 @@ The script tags of various vue files look like the following.
 
 <script lang="ts">
 import { defineComponent, ref, type Ref } from 'vue';
-import { useInertia, route } from 'vue-inertia-composable';
+import { useInertia, route, InertiaLink } from 'vue-inertia-composable';
 
-import {
-  Head as InertiaHead,
-  Link as InertiaLink,
-} from '@inertiajs/inertia-vue';
+import { Head as InertiaHead } from '@inertiajs/inertia-vue';
 
 export default defineComponent({
   /** Using Components */
@@ -128,8 +125,13 @@ These functions are basically used to access from within the `setup()` function.
 | `usePage<SharedProps = Record<string, any>>(): Page<SharedProps>`                                                     | Alias of `Vue.$page`                      |
 | `useForm<TForm = Record<string, any>>(args: TForm): InertiaForm<TForm>`                                               | Alias of `Vue.$inertia.form(...)`         |
 | `route(name: string, params?: RouteParamsWithQueryOverload, RouteParam, absolute?: boolean, config?: Config): string` | Alias of `ziggy(...)` or `Vue.route(...)` |
+| `InertiaLink`                                                                                                         | Experimental. See bellow.                 |
 
 Originally defined PageProps are similar to key-value pairs, but the value type is defined as unknown. As it is, the TypeScript check doesn't go well, so I changed the value type to any.
+
+### InertiaLink
+
+This component was created experimentally because [@inertiajs/vue](https://github.com/inertiajs/inertia/tree/master/packages/inertia-vue)'s `InertiaLink` causes a type checking error. Not required if you don't use TypeScript.
 
 ## See also
 
