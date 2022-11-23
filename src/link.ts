@@ -2,8 +2,8 @@ import { defineComponent, h, type PropType, type SetupContext } from 'vue-demi';
 import {
   Inertia,
   mergeDataIntoQueryString,
-  Method,
   shouldIntercept,
+  type Method,
   type PreserveStateOption,
   type RequestPayload,
   type VisitOptions,
