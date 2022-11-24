@@ -70,7 +70,7 @@ The script tags of various vue files look like the following.
 
 <script lang="ts">
 import { defineComponent, ref, type Ref } from 'vue';
-import { useInertia, route, InertiaLink } from 'vue-inertia-composable';
+import { useForm, route, InertiaLink } from 'vue-inertia-composable';
 
 import { Head as InertiaHead } from '@inertiajs/inertia-vue';
 
@@ -82,33 +82,21 @@ export default defineComponent({
   },
   /** Setup */
   setup() {
-    /** get Inertia Instance */
-    const inertia = useInertia();
-
-    /** Form value */
-    const form: Ref<{
-      text: string;
-      no: number;
-      processing?: boolean;
-    }> = ref({
-      text: '',
-      no: 0,
+    /** Inertia Form */
+    const form = useForm({
+      email: '',
+      password: '',
+      remember: false,
     });
 
     /** Form submit handler */
     const submit = () => {
-      // console.log(form.value);
-      inertia.post(route('target'), form.value, {
-        onFinish: () => {
-          console.log('submit to target');
-        },
+      form.post(route('login'), {
+        onFinish: () => form.reset('password'),
       });
     };
 
-    return {
-      form,
-      submit,
-    };
+    return { form, submit, route };
   },
 });
 </script>

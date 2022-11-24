@@ -75,10 +75,10 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
           'qs',
           'side-channel',
           'vue',
+          'vue-demi',
           'ziggy-js',
         ],
         output: {
-          exports: 'named',
           globals: {
             '@inertiajs/inertia-vue': 'InertiaVue',
             '@inertiajs/inertia': 'Inertia',
@@ -87,6 +87,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
             qs: 'Qs',
             'side-channel': 'SideChannel',
             vue: 'Vue',
+            'vue-demi': 'VueDemi',
             'ziggy-js': 'ziggy',
           },
         },

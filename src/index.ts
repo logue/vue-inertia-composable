@@ -68,13 +68,13 @@ export function useInertia(): typeof Inertia & InertiaFormTrait {
  *
  * @param args - Form Key-Value Pair.
  */
-export function useForm<TForm = Record<string, any>>(
-  args: TForm
-): InertiaForm<TForm> {
+export function useForm<TForm = Record<string, any> | undefined>(
+  args?: TForm
+): InertiaForm<TForm | undefined> {
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
-    return instance.proxy.$inertia.form<TForm>(args);
+    return instance.proxy.$inertia.form<TForm | undefined>(args);
   } else {
     warn();
   }
