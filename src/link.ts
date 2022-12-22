@@ -1,8 +1,9 @@
-import { defineComponent, h, type PropType, type SetupContext } from 'vue-demi';
+import { defineComponent, h, type PropType } from 'vue-demi';
 import {
   Inertia,
   mergeDataIntoQueryString,
   shouldIntercept,
+  type FormDataConvertible,
   type Method,
   type PreserveStateOption,
   type RequestPayload,
@@ -21,10 +22,6 @@ const InertiaLink = defineComponent({
       type: String,
       default: 'a',
     },
-    data: {
-      type: Object as PropType<RequestPayload>,
-      default: () => {},
-    },
     href: {
       type: String as PropType<string | URL>,
       default: '',
@@ -32,6 +29,10 @@ const InertiaLink = defineComponent({
     method: {
       type: String as PropType<'get' | 'post' | 'put' | 'patch' | 'delete'>,
       default: 'get',
+    },
+    data: {
+      type: Object as PropType<RequestPayload>,
+      default: () => {},
     },
     replace: {
       type: Boolean,
@@ -53,60 +54,70 @@ const InertiaLink = defineComponent({
       type: Object as PropType<Record<string, string>>,
       default: () => {},
     },
+    errorBag: {
+      type: String,
+      default: null,
+    },
+    forceFormData: {
+      type: Boolean,
+      default: false,
+    },
     queryStringArrayFormat: {
       type: String as PropType<'indices' | 'brackets'>,
       default: 'brackets',
     },
   },
-  setup(_props, { slots, attrs }: SetupContext) {
-    return (props: any) => {
-      const as = props.as.toLowerCase();
-      const method = props.method.toLowerCase() as Method;
-      const [href, data] = mergeDataIntoQueryString(
-        method,
-        props.href || '',
-        props.data,
-        props.queryStringArrayFormat
+  render() {
+    const as = (this.$props.as.toLowerCase() || 'a') as string;
+    const method = (this.$props.method.toLocaleLowerCase() || 'get') as Method;
+    const attrs = this.$attrs as VisitOptions;
+
+    const [href, data] = mergeDataIntoQueryString(
+      method,
+      this.$props.href || '',
+      this.$props.data as Record<string, FormDataConvertible>,
+      this.$props.queryStringArrayFormat
+    );
+
+    if (as === 'a' && method !== 'get') {
+      console.warn(
+        `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<inertia-link href="${href}" method="${method}" as="button">...</inertia-link>`
       );
+    }
+    return h(
+      as,
+      {
+        ...this.$attrs,
+        ...(as === 'a' ? { href } : {}),
+        onClick: (event: KeyboardEvent) => {
+          event.preventDefault();
+          if (!shouldIntercept(event)) {
+            return;
+          }
 
-      if (as === 'a' && method !== 'get') {
-        console.warn(
-          `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<inertia-link href="${href}" method="${method}" as="button">...</inertia-link>`
-        );
-      }
-
-      return h(
-        props.as,
-        {
-          ...attrs,
-          ...(as === 'a' ? { href } : {}),
-          onClick: (event: KeyboardEvent) => {
-            if (shouldIntercept(event)) {
-              event.preventDefault();
-
-              Inertia.visit(href, {
-                data: data,
-                method: method,
-                replace: props.replace,
-                preserveScroll: props.preserveScroll,
-                preserveState: props.preserveState ?? method !== 'get',
-                only: props.only,
-                headers: props.headers,
-                onCancelToken: attrs.onCancelToken || (() => undefined),
-                onBefore: attrs.onBefore || (() => undefined),
-                onStart: attrs.onStart || (() => undefined),
-                onProgress: attrs.onProgress || (() => undefined),
-                onFinish: attrs.onFinish || (() => undefined),
-                onCancel: attrs.onCancel || (() => undefined),
-                onSuccess: attrs.onSuccess || (() => undefined),
-                onError: attrs.onError || (() => undefined),
-              } as VisitOptions);
-            }
-          },
-        } as any,
-        slots as any
-      );
-    };
+          Inertia.visit(href, {
+            method: method,
+            data: data,
+            replace: this.$props.replace,
+            preserveScroll: this.$props.preserveScroll,
+            preserveState: this.$props.preserveState ?? method !== 'get',
+            only: this.$props.only,
+            headers: this.$props.headers,
+            errorBag: this.$props.errorBag,
+            forceFormData: this.$props.forceFormData,
+            onCancelToken: attrs.onCancelToken || (() => undefined),
+            onBefore: attrs.onBefore || (() => undefined),
+            onStart: attrs.onStart || (() => undefined),
+            onProgress: attrs.onProgress || (() => undefined),
+            onFinish: attrs.onFinish || (() => undefined),
+            onCancel: attrs.onCancel || (() => undefined),
+            onSuccess: attrs.onSuccess || (() => undefined),
+            onError: attrs.onError || (() => undefined),
+          });
+        },
+      } as any,
+      this.$slots.default
+    );
   },
 });
 

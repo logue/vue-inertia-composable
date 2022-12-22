@@ -1,16 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig.json",
-  "extends": "@vue/tsconfig/tsconfig.web.json",
-  "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "dist",
-    "newLine": "lf",
-    "paths": { "@/*": ["./src/*"] },
-    "types": ["vue"]
-  },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "exclude": ["node_modules", "dist"],
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "vueCompilerOptions": { "target": 2.7 }
+  "files": [],
+  "compilerOptions": { "newLine": "lf" },
+  "references": [
+    { "path": "./tsconfig.config.json" },
+    { "path": "./tsconfig.app.json" }
+  ]
 }
