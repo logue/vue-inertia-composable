@@ -66,15 +66,21 @@ export function useInertia(): typeof Inertia & InertiaFormTrait {
 /**
  * Get Form
  *
- * @param args - Form Key-Value Pair.
+ * @param data - Form Key-Value Pair.
+ * @param rememberKey - Cancel token
  */
-export function useForm<TForm = Record<string, any> | undefined>(
-  args?: TForm
-): InertiaForm<TForm | undefined> {
+export function useForm<TForm = Record<string, any>>(
+  data: TForm,
+  rememberKey?: string
+): InertiaForm<TForm> {
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
-    return instance.proxy.$inertia.form<TForm | undefined>(args);
+    if (rememberKey) {
+      return instance.proxy.$inertia.form<TForm>(rememberKey, data);
+    } else {
+      return instance.proxy.$inertia.form<TForm>(data);
+    }
   } else {
     warn();
   }
@@ -94,7 +100,7 @@ export function route(
   params?: RouteParamsWithQueryOverload | RouteParam,
   absolute?: boolean,
   config?: Config
-): Router & string {
+): string | Router {
   /** Get Instance */
   const instance = getCurrentInstance();
 
@@ -103,7 +109,12 @@ export function route(
     return instance.proxy.route(name, params, absolute, config);
   }
   // if not instance get ziggy directly
-  return ziggy(name as any, params, absolute, config) as any;
+  if (name) {
+    // If name is defined, return string.
+    return ziggy(name, params, absolute, config);
+  }
+  // If Name does not defined, return Route object
+  return ziggy(undefined, params, absolute, config);
 }
 
 /** output warn message. */
