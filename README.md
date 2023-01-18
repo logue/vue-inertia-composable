@@ -13,15 +13,16 @@ A wrapper library for using [Inertia](https://inertiajs.com/) with the [Composit
 
 Rewrite entry point script(such as `main.ts` or `app.js`).
 
-```js
+```ts
 import './bootstrap';
 import '../css/app.css';
 
 import Vue from 'vue';
-import { createInertiaApp } from '@inertiajs/inertia-vue';
-import { InertiaProgress } from '@inertiajs/progress';
+import teleport from '@logue/vue2-helpers/teleport';
+import { createInertiaApp } from '@inertiajs/vue2';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+
 import ziggy from 'ziggy-js';
 
 /** Application Name */
@@ -31,28 +32,73 @@ const appName =
 createInertiaApp({
   title: title => `${title} - ${appName}`,
   resolve: name =>
+    // @ts-ignore
     resolvePageComponent(
       `./Pages/${name}.vue`,
       import.meta.glob('./Pages/**/*.vue')
     ),
-  setup({ el, app, props, plugin }) {
-    const App = new Vue({ render: h => h(app, props) });
+  // @ts-ignore
+  setup({ el, App, props, plugin }) {
     // Add route function.
-    App.mixin({ methods: { route: ziggy } });
-    // Regist Inertia Vue.
-    App.use(plugin);
-    // Since Ziggy here is declared globally, there is no import.
+    Vue.mixin({ methods: { route: ziggy } });
+    // Register Inertia
+    Vue.use(plugin);
+    // Telepot for vue2.
+    Vue.component('Teleport', teleport);
     // @ts-ignore
-    App.use(ZiggyVue, Ziggy);
+    Vue.use(ZiggyVue, Ziggy);
 
-    // ... Add some components
-
-    // Mount
-    return App.$mount(el);
+    return new Vue({ render: h => h(App, props) }).$mount(el);
+  },
+  progress: {
+    color: import.meta.env.VITE_APP_INERTIA_PROGRESS_COLOR || '#4B5563',
   },
 });
+```
 
-InertiaProgress.init({ color: '#4B5563' });
+ssr.js or ssr.ts is bellow.
+
+```js
+import { createInertiaApp } from '@inertiajs/vue2';
+// @ts-ignore
+import { createRenderer } from 'vue-server-renderer';
+// @ts-ignore
+import createServer from '@inertiajs/vue2/server';
+import Vue from 'vue';
+import teleport from '@logue/vue2-helpers/teleport';
+import ziggy from 'ziggy-js';
+
+/** Application Name */
+const appName = import.meta.env.APP_NAME || 'Laravel';
+
+createServer(page =>
+  createInertiaApp({
+    title: title => `${title} - ${appName}`,
+    page,
+    render: createRenderer().renderToString,
+    resolve: name =>
+      // @ts-ignore
+      resolvePageComponent(
+        `./Pages/${name}.vue`,
+        import.meta.glob('./Pages/**/*.vue')
+      ),
+    // @ts-ignore
+    setup({ App, props, plugin }) {
+      // Add route function.
+      Vue.mixin({ methods: { route: ziggy } });
+      // Register Inertia
+      Vue.use(plugin);
+      // Telepot for vue2.
+      Vue.component('Teleport', teleport);
+      // @ts-ignore
+      Vue.use(ZiggyVue, Ziggy);
+      return new Vue({ render: h => h(App, props) });
+    },
+    progress: {
+      color: import.meta.env.VITE_APP_INERTIA_PROGRESS_COLOR || '#4B5563',
+    },
+  })
+);
 ```
 
 The script tags of various vue files look like the following.
@@ -70,7 +116,8 @@ The script tags of various vue files look like the following.
 
 <script lang="ts">
 import { defineComponent, ref, type Ref } from 'vue';
-import { useForm, route, InertiaLink } from 'vue-inertia-composable';
+import { useForm } from '@inertiajs/vue2';
+import { route, InertiaLink } from 'vue-inertia-composable';
 
 import { Head as InertiaHead } from '@inertiajs/inertia-vue';
 
@@ -87,7 +134,7 @@ export default defineComponent({
       email: '',
       password: '',
       remember: false,
-    });
+    }) as any;
 
     /** Form submit handler */
     const submit = () => {
@@ -110,8 +157,8 @@ These functions are basically used to access from within the `setup()` function.
 | --------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | `useInertia(): typeof Inertia & InertiaFormTrait`                                                                     | Alias of `Vue.$inertia`                   |
 | `useHeadManager(): InertiaHeadManager`                                                                                | Alias of `Vue.$headManager`               |
-| `usePage<SharedProps = Record<string, any>>(): Page<SharedProps>`                                                     | Alias of `Vue.$page`                      |
-| `useForm<TForm = Record<string, any>>(args: TForm): InertiaForm<TForm>`                                               | Alias of `Vue.$inertia.form(...)`         |
+| ~~`usePage<SharedProps = Record<string, any>>(): Page<SharedProps>`~~                                                 | Alias of `Vue.$page`                      |
+| ~~`useForm<TForm = Record<string, any>>(args: TForm): InertiaForm<TForm>`~~                                           | Alias of `Vue.$inertia.form(...)`         |
 | `route(name: string, params?: RouteParamsWithQueryOverload, RouteParam, absolute?: boolean, config?: Config): string` | Alias of `ziggy(...)` or `Vue.route(...)` |
 | `InertiaLink`                                                                                                         | Experimental. See bellow.                 |
 
@@ -130,4 +177,4 @@ This component was created experimentally because [@inertiajs/vue](https://githu
 
 [MIT](LICENSE)
 
-&copy; 2022 by Logue.
+&copy; 2022-2023 by Logue.

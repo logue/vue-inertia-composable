@@ -1,12 +1,8 @@
 import { getCurrentInstance } from 'vue-demi';
 import ziggy from 'ziggy-js';
 
-import type { Inertia, Page } from '@inertiajs/inertia';
-import type {
-  InertiaForm,
-  InertiaFormTrait,
-  InertiaHeadManager,
-} from '@inertiajs/inertia-vue';
+import { useForm as _useForm, usePage as _usePage } from '@inertiajs/vue2';
+import type { Inertia } from '@inertiajs/inertia';
 import type {
   Router,
   Config,
@@ -15,13 +11,16 @@ import type {
 } from 'ziggy-js';
 import { InertiaLink, install } from './link';
 
+import type { Page } from '@inertiajs/core';
+
 /**
  * Get head manager instance
  */
-export function useHeadManager(): InertiaHeadManager {
+export function useHeadManager() {
   /** Vue instance */
   const instance = getCurrentInstance();
   if (instance) {
+    // @ts-ignore
     return instance.proxy.$headManager;
   } else {
     warn();
@@ -31,6 +30,8 @@ export function useHeadManager(): InertiaHeadManager {
 
 /**
  * Get page instance
+ *
+ * @deprecated use \@inertiajs/vue2's usePage().
  */
 export function usePage<
   // Originally defined PageProps are similar to key-value pairs,
@@ -42,20 +43,20 @@ export function usePage<
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
+    // @ts-ignore
     return instance.proxy.$page as Page<SharedProps>;
-  } else {
-    warn();
   }
-  return undefined as any;
+  return _usePage();
 }
 
 /**
  * Get inertia instance
  */
-export function useInertia(): typeof Inertia & InertiaFormTrait {
+export function useInertia(): typeof Inertia {
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
+    // @ts-ignore
     return instance.proxy.$inertia;
   } else {
     warn();
@@ -68,23 +69,26 @@ export function useInertia(): typeof Inertia & InertiaFormTrait {
  *
  * @param data - Form Key-Value Pair.
  * @param rememberKey - Cancel token
+ *
+ * @deprecated use \@inertiajs/vue2's useForm()
  */
 export function useForm<TForm = Record<string, any>>(
   data: TForm,
   rememberKey?: string
-): InertiaForm<TForm> {
+): TForm {
   /** Get Instance */
   const instance = getCurrentInstance();
-  if (instance) {
-    if (rememberKey) {
-      return instance.proxy.$inertia.form<TForm>(rememberKey, data);
-    } else {
-      return instance.proxy.$inertia.form<TForm>(data);
-    }
-  } else {
-    warn();
+
+  if (rememberKey) {
+    return instance
+      ? // @ts-ignore
+        instance.proxy.$inertia.form<TForm>(rememberKey, data)
+      : _useForm(rememberKey, data);
   }
-  return undefined as any;
+  return instance
+    ? // @ts-ignore
+      instance.proxy.$inertia.form<TForm>(data)
+    : _useForm(data);
 }
 
 /**

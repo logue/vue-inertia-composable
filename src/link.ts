@@ -23,7 +23,7 @@ const InertiaLink = defineComponent({
       default: 'a',
     },
     href: {
-      type: String as PropType<string | URL>,
+      type: String,
       default: '',
     },
     method: {
