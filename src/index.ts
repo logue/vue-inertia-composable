@@ -73,8 +73,8 @@ export function useInertia(): typeof Inertia {
  * @deprecated use \@inertiajs/vue2's useForm()
  */
 export function useForm<TForm = Record<string, any>>(
-  data: TForm,
-  rememberKey?: string
+  rememberKey?: string,
+  data?: TForm
 ): TForm {
   /** Get Instance */
   const instance = getCurrentInstance();
@@ -107,8 +107,8 @@ export function route(
 ): string | Router {
   /** Get Instance */
   const instance = getCurrentInstance();
-
-  if (instance) {
+  // @ts-ignore
+  if (instance && instance.proxy.route) {
     // @ts-ignore
     return instance.proxy.route(name, params, absolute, config);
   }

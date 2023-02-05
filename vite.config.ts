@@ -67,7 +67,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
             : undefined,
         ],
         external: [
-          '@inertiajs/inertia-vue',
+          '@inertiajs/vue2',
           '@inertiajs/inertia',
           'axios',
           'deepmerge',
@@ -80,7 +80,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
         ],
         output: {
           globals: {
-            '@inertiajs/inertia-vue': 'InertiaVue',
+            '@inertiajs/vue2': 'InertiaVue2',
             '@inertiajs/inertia': 'Inertia',
             axios: 'Axios',
             deepmerge: 'Deepmerge',

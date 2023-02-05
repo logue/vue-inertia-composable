@@ -6,7 +6,6 @@ import {
   type FormDataConvertible,
   type Method,
   type PreserveStateOption,
-  type RequestPayload,
   type VisitOptions,
 } from '@inertiajs/inertia';
 
@@ -31,7 +30,7 @@ const InertiaLink = defineComponent({
       default: 'get',
     },
     data: {
-      type: Object as PropType<RequestPayload>,
+      type: Object as PropType<Record<string, FormDataConvertible>>,
       default: () => {},
     },
     replace: {
@@ -74,8 +73,8 @@ const InertiaLink = defineComponent({
 
     const [href, data] = mergeDataIntoQueryString(
       method,
-      this.$props.href || '',
-      this.$props.data as Record<string, FormDataConvertible>,
+      this.$props.href,
+      this.$props.data,
       this.$props.queryStringArrayFormat
     );
 
