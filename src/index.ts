@@ -4,7 +4,6 @@ import ziggy from 'ziggy-js';
 import { useForm as _useForm, usePage as _usePage } from '@inertiajs/vue2';
 import type { Inertia } from '@inertiajs/inertia';
 import type {
-  Router,
   Config,
   RouteParam,
   RouteParamsWithQueryOverload,
@@ -100,11 +99,11 @@ export function useForm<TForm = Record<string, any>>(
  * @param config - override confing. (Host, Port, etc.)
  */
 export function route(
-  name?: string,
+  name: string,
   params?: RouteParamsWithQueryOverload | RouteParam,
   absolute?: boolean,
   config?: Config
-): string | Router {
+): string {
   /** Get Instance */
   const instance = getCurrentInstance();
   // @ts-ignore
@@ -113,12 +112,7 @@ export function route(
     return instance.proxy.route(name, params, absolute, config);
   }
   // if not instance get ziggy directly
-  if (name) {
-    // If name is defined, return string.
-    return ziggy(name, params, absolute, config);
-  }
-  // If Name does not defined, return Route object
-  return ziggy(undefined, params, absolute, config);
+  return ziggy(name, params, absolute, config);
 }
 
 /** output warn message. */
