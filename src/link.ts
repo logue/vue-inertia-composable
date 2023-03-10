@@ -22,8 +22,8 @@ const InertiaLink = defineComponent({
       default: 'a',
     },
     href: {
-      type: String as PropType<string | undefined>,
-      default: '',
+      type: String,
+      default: import.meta.url,
     },
     method: {
       type: String as PropType<'get' | 'post' | 'put' | 'patch' | 'delete'>,
@@ -31,7 +31,9 @@ const InertiaLink = defineComponent({
     },
     data: {
       type: Object as PropType<Record<string, FormDataConvertible>>,
-      default: () => {},
+      default: () => {
+        return {};
+      },
     },
     replace: {
       type: Boolean,
@@ -47,15 +49,19 @@ const InertiaLink = defineComponent({
     },
     only: {
       type: Array as PropType<string[]>,
-      default: () => [],
+      default: () => {
+        return [];
+      },
     },
     headers: {
       type: Object as PropType<Record<string, string>>,
-      default: () => {},
+      default: () => () => {
+        return {};
+      },
     },
     errorBag: {
       type: String,
-      default: null,
+      default: '',
     },
     forceFormData: {
       type: Boolean,
@@ -73,7 +79,7 @@ const InertiaLink = defineComponent({
 
     const [href, data] = mergeDataIntoQueryString(
       method,
-      this.$props.href || '',
+      this.$props.href,
       this.$props.data,
       this.$props.queryStringArrayFormat
     );
@@ -87,7 +93,8 @@ const InertiaLink = defineComponent({
       as,
       {
         ...this.$attrs,
-        ...(as === 'a' ? { href } : {}),
+        ...(as === 'a' ? { href: href } : {}),
+        // @ts-ignore
         onClick: (event: KeyboardEvent) => {
           event.preventDefault();
           if (!shouldIntercept(event)) {
@@ -114,7 +121,7 @@ const InertiaLink = defineComponent({
             onError: attrs.onError || (() => undefined),
           });
         },
-      } as any,
+      },
       this.$slots.default
     );
   },

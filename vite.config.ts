@@ -2,6 +2,7 @@ import { checker } from 'vite-plugin-checker';
 import { defineConfig, type UserConfig } from 'vite';
 import { visualizer } from 'rollup-plugin-visualizer';
 import banner from 'vite-plugin-banner';
+import dts from 'vite-plugin-dts';
 
 import { fileURLToPath, URL } from 'node:url';
 
@@ -40,6 +41,9 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
  * @see {@link ${pkg.homepage}}
  */
 `),
+      dts({
+        tsConfigFilePath: './tsconfig.app.json',
+      }),
     ],
     optimizeDeps: {
       exclude: ['vue-demi'],

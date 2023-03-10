@@ -37,13 +37,13 @@ export function usePage<
   // but the value type is defined as unknown.
   // As it is, the TypeScript check doesn't go well,
   // so I changed the value type to any.
-  SharedProps = Record<string, any>
->(): Page<SharedProps> {
+  PageProps extends Record<string, any>
+>(): Page<PageProps> {
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
     // @ts-ignore
-    return instance.proxy.$page as Page<SharedProps>;
+    return instance.proxy.$page as Page<PageProps>;
   }
   return _usePage();
 }
