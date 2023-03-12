@@ -54,8 +54,8 @@ const InertiaLink = defineComponent({
       },
     },
     headers: {
-      type: Object as PropType<Record<string, string>>,
-      default: () => () => {
+      type: Function as PropType<Record<string, string>>,
+      default: () => {
         return {};
       },
     },
