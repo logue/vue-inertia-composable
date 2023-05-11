@@ -1,7 +1,11 @@
 import { getCurrentInstance } from 'vue-demi';
 import ziggy from 'ziggy-js';
 
-import { useForm as _useForm, usePage as _usePage } from '@inertiajs/vue2';
+import {
+  useForm as _useForm,
+  usePage as _usePage,
+  type InertiaHeadManager,
+} from '@inertiajs/vue2';
 import type { Inertia } from '@inertiajs/inertia';
 import type {
   Config,
@@ -15,11 +19,11 @@ import type { Page } from '@inertiajs/core';
 /**
  * Get head manager instance
  */
-export function useHeadManager() {
+export function useHeadManager(): InertiaHeadManager {
   /** Vue instance */
   const instance = getCurrentInstance();
   if (instance) {
-    // @ts-ignore
+    // @ts-expect-error head manager
     return instance.proxy.$headManager;
   } else {
     warn();
@@ -42,10 +46,10 @@ export function usePage<
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
-    // @ts-ignore
+    // @ts-expect-error Page
     return instance.proxy.$page as Page<PageProps>;
   }
-  return _usePage();
+  return _usePage() as any;
 }
 
 /**
@@ -55,7 +59,7 @@ export function useInertia(): typeof Inertia {
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
-    // @ts-ignore
+    // @ts-expect-error Inertia
     return instance.proxy.$inertia;
   } else {
     warn();
@@ -80,12 +84,12 @@ export function useForm<TForm = Record<string, any>>(
 
   if (rememberKey) {
     return instance
-      ? // @ts-ignore
+      ? // @ts-expect-error Inertia Form
         instance.proxy.$inertia.form<TForm>(rememberKey, data)
       : _useForm(rememberKey, data);
   }
   return instance
-    ? // @ts-ignore
+    ? // @ts-expect-error Inertia Form
       instance.proxy.$inertia.form<TForm>(data)
     : _useForm(data);
 }
@@ -106,9 +110,9 @@ export function route(
 ): string {
   /** Get Instance */
   const instance = getCurrentInstance();
-  // @ts-ignore
-  if (instance && instance.proxy.route) {
-    // @ts-ignore
+  // @ts-expect-error Ziggy exists
+  if (instance?.proxy.route) {
+    // @ts-expect-error get Ziggy
     return instance.proxy.route(name, params, absolute, config);
   }
   // if not instance get ziggy directly
@@ -116,15 +120,15 @@ export function route(
 }
 
 /** output warn message. */
-const warn = () =>
+const warn = (): void => {
   console.warn(
     `[Inertia Composable] getCurrentInstance() returned null. Method must be called at the top of a setup() function.`
   );
+};
 
 // For CDN.
-// @ts-ignore
 if (typeof window !== 'undefined') {
-  // @ts-ignore
+  // @ts-expect-error Register route to global
   window.route = route;
 }
 

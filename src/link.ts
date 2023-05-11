@@ -8,6 +8,7 @@ import {
   type PreserveStateOption,
   type VisitOptions,
 } from '@inertiajs/inertia';
+import type { VNode } from 'vue';
 
 /**
  * Alternate of Inertia Link Component
@@ -73,9 +74,9 @@ const InertiaLink = defineComponent({
     },
   },
   render() {
-    const as = (this.$props.as.toLowerCase() || 'a') as string;
+    const tag = this.$props.as.toLowerCase() || 'a';
     const method = (this.$props.method.toLocaleLowerCase() || 'get') as Method;
-    const attrs = this.$attrs as VisitOptions;
+    const attrs = this.$attrs;
 
     const [href, data] = mergeDataIntoQueryString(
       method,
@@ -84,26 +85,30 @@ const InertiaLink = defineComponent({
       this.$props.queryStringArrayFormat
     );
 
-    if (as === 'a' && method !== 'get') {
-      console.warn(
-        `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<inertia-link href="${href}" method="${method}" as="button">...</inertia-link>`
-      );
+    if (tag === 'a') {
+      if (method !== 'get') {
+        console.warn(
+          `Creating POST/PUT/PATCH/DELETE <a> links is discouraged as it causes "Open Link in New Tab/Window" accessibility issues.\n\nPlease specify a more appropriate element using the "as" attribute. For example:\n\n<inertia-link href="${href}" method="${method}" as="button">...</inertia-link>`
+        );
+      }
+      attrs.href = href;
     }
-    return h(
-      as,
+
+    const ret: VNode = h(
+      tag,
       {
-        ...this.$attrs,
-        ...(as === 'a' ? { href: href } : {}),
-        // @ts-ignore
+        // @ts-expect-error Ignore errors
         onClick: (event: KeyboardEvent) => {
-          event.preventDefault();
           if (!shouldIntercept(event)) {
             return;
           }
-
+          if (tag === 'a' && href) {
+            location.href = href;
+            return;
+          }
           Inertia.visit(href, {
-            method: method,
-            data: data,
+            method,
+            data,
             replace: this.$props.replace,
             preserveScroll: this.$props.preserveScroll,
             preserveState: this.$props.preserveState ?? method !== 'get',
@@ -119,20 +124,23 @@ const InertiaLink = defineComponent({
             onCancel: attrs.onCancel || (() => undefined),
             onSuccess: attrs.onSuccess || (() => undefined),
             onError: attrs.onError || (() => undefined),
-          });
+          } as VisitOptions);
         },
       },
       this.$slots.default
     );
+
+    console.log(ret);
+    return ret;
   },
 });
 
-const installInertiaLink = (app: any) =>
+const installInertiaLink = (app: any): void =>
   app.component('InertiaLink', InertiaLink);
 
 export { InertiaLink, installInertiaLink as install };
 
 if (typeof window !== 'undefined' && window.Vue) {
-  // @ts-ignore
+  // @ts-expect-error Register global Vue
   window.Vue.use(InertiaLink);
 }
