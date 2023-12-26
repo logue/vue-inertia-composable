@@ -1,20 +1,16 @@
-import { getCurrentInstance } from 'vue-demi';
-import ziggy from 'ziggy-js';
-
 import {
   useForm as _useForm,
   usePage as _usePage,
   type InertiaHeadManager,
 } from '@inertiajs/vue2';
-import type { Inertia } from '@inertiajs/inertia';
-import type {
-  Config,
-  RouteParam,
-  RouteParamsWithQueryOverload,
-} from 'ziggy-js';
+import { getCurrentInstance } from 'vue-demi';
+import ziggy from 'ziggy-js';
+
 import { InertiaLink, install } from './link';
 
 import type { Page } from '@inertiajs/core';
+import type { Inertia } from '@inertiajs/inertia';
+import type { Config, RouteParams } from 'ziggy-js';
 
 /**
  * Get head manager instance
@@ -23,7 +19,6 @@ export function useHeadManager(): InertiaHeadManager {
   /** Vue instance */
   const instance = getCurrentInstance();
   if (instance) {
-    // @ts-expect-error head manager
     return instance.proxy.$headManager;
   } else {
     warn();
@@ -41,12 +36,11 @@ export function usePage<
   // but the value type is defined as unknown.
   // As it is, the TypeScript check doesn't go well,
   // so I changed the value type to any.
-  PageProps extends Record<string, any>
+  PageProps extends Record<string, any>,
 >(): Page<PageProps> {
   /** Get Instance */
   const instance = getCurrentInstance();
   if (instance) {
-    // @ts-expect-error Page
     return instance.proxy.$page as Page<PageProps>;
   }
   return _usePage() as any;
@@ -78,9 +72,13 @@ export function useInertia(): typeof Inertia {
 export function useForm<TForm = Record<string, any>>(
   rememberKey?: string,
   data?: TForm
-): TForm {
+): TForm | undefined {
   /** Get Instance */
   const instance = getCurrentInstance();
+
+  if (!data) {
+    return;
+  }
 
   if (rememberKey) {
     return instance
@@ -104,7 +102,7 @@ export function useForm<TForm = Record<string, any>>(
  */
 export function route(
   name: string,
-  params?: RouteParamsWithQueryOverload | RouteParam,
+  params?: RouteParams<string> | undefined,
   absolute?: boolean,
   config?: Config
 ): string {

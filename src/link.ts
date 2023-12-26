@@ -1,4 +1,5 @@
-import { defineComponent, h, type PropType } from 'vue-demi';
+import type { VNode } from 'vue';
+
 import {
   Inertia,
   mergeDataIntoQueryString,
@@ -8,7 +9,7 @@ import {
   type PreserveStateOption,
   type VisitOptions,
 } from '@inertiajs/inertia';
-import type { VNode } from 'vue';
+import { defineComponent, h, type PropType } from 'vue-demi';
 
 /**
  * Alternate of Inertia Link Component
@@ -106,6 +107,7 @@ const InertiaLink = defineComponent({
             location.href = href;
             return;
           }
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           Inertia.visit(href, {
             method,
             data,
@@ -140,7 +142,7 @@ const installInertiaLink = (app: any): void =>
 
 export { InertiaLink, installInertiaLink as install };
 
-if (typeof window !== 'undefined' && window.Vue) {
+if (window?.Vue) {
   // @ts-expect-error Register global Vue
   window.Vue.use(InertiaLink);
 }

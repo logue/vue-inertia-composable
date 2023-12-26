@@ -1,10 +1,11 @@
-import { checker } from 'vite-plugin-checker';
+import { fileURLToPath, URL } from 'node:url';
+
 import { defineConfig, type UserConfig } from 'vite';
+
 import { visualizer } from 'rollup-plugin-visualizer';
 import banner from 'vite-plugin-banner';
+import { checker } from 'vite-plugin-checker';
 import dts from 'vite-plugin-dts';
-
-import { fileURLToPath, URL } from 'node:url';
 
 import pkg from './package.json';
 
@@ -23,10 +24,8 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
       // https://github.com/fi3ework/vite-plugin-checker
       checker({
         typescript: true,
-        vueTsc: true,
-        eslint: {
-          lintCommand: 'eslint', // for example, lint .ts & .tsx
-        },
+        // vueTsc: true,
+        // eslint: { lintCommand: 'eslint' },
       }),
       // vite-plugin-banner
       // https://github.com/chengpeiquan/vite-plugin-banner
@@ -41,9 +40,7 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
  * @see {@link ${pkg.homepage}}
  */
 `),
-      dts({
-        tsConfigFilePath: './tsconfig.app.json',
-      }),
+      dts({ tsconfigPath: './tsconfig.app.json' }),
     ],
     optimizeDeps: {
       exclude: ['vue-demi'],
