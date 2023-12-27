@@ -1007,6 +1007,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/language-core@npm:1.8.27":
+  version: 1.8.27
+  resolution: "@vue/language-core@npm:1.8.27"
+  dependencies:
+    "@volar/language-core": "npm:~1.11.1"
+    "@volar/source-map": "npm:~1.11.1"
+    "@vue/compiler-dom": "npm:^3.3.0"
+    "@vue/shared": "npm:^3.3.0"
+    computeds: "npm:^0.0.1"
+    minimatch: "npm:^9.0.3"
+    muggle-string: "npm:^0.3.1"
+    path-browserify: "npm:^1.0.1"
+    vue-template-compiler: "npm:^2.7.14"
+  peerDependencies:
+    typescript: "*"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 8ad4e129a334dd78b3ffc161615e4c303105f3e5f2478458eaea8db71d3b2b8081120d913464532d5b6c4f2c0611b2c5cb2a0f9a5f46ba6d5e9422d5d63ae71b
+  languageName: node
+  linkType: hard
+
 "@vue/shared@npm:3.3.4, @vue/shared@npm:^3.3.0":
   version: 3.3.4
   resolution: "@vue/shared@npm:3.3.4"
@@ -6065,7 +6087,7 @@ __metadata:
     vue: "npm:^2.7.16"
     vue-demi: "npm:latest"
     vue-eslint-parser: "npm:^9.3.2"
-    vue-tsc: "npm:1.8.26"
+    vue-tsc: "npm:1.8.27"
     ziggy-js: "npm:^1.8.1"
   peerDependencies:
     "@inertiajs/inertia": ^0.11.1
@@ -6089,7 +6111,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-tsc@npm:1.8.26, vue-tsc@npm:^1.8.26":
+"vue-tsc@npm:1.8.27":
+  version: 1.8.27
+  resolution: "vue-tsc@npm:1.8.27"
+  dependencies:
+    "@volar/typescript": "npm:~1.11.1"
+    "@vue/language-core": "npm:1.8.27"
+    semver: "npm:^7.5.4"
+  peerDependencies:
+    typescript: "*"
+  bin:
+    vue-tsc: bin/vue-tsc.js
+  checksum: fb84ff195de75e3529cf01b917f111bee561d15e1e437aa97a47e797f99f913783f24ec2d595271240240a21df08ba43b36aa7fc82a48a4c396a0f6d0e409376
+  languageName: node
+  linkType: hard
+
+"vue-tsc@npm:^1.8.26":
   version: 1.8.26
   resolution: "vue-tsc@npm:1.8.26"
   dependencies:

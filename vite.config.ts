@@ -40,7 +40,9 @@ export default defineConfig(async ({ mode }): Promise<UserConfig> => {
  * @see {@link ${pkg.homepage}}
  */
 `),
-      dts({ tsconfigPath: './tsconfig.app.json' }),
+      // vite-plugin-dts
+      // https://github.com/qmhc/vite-plugin-dts
+      dts(),
     ],
     optimizeDeps: {
       exclude: ['vue-demi'],
